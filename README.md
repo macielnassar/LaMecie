@@ -1,1 +1,1 @@
-# LaMecie
+# LaMecie Bakery
