@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lamecie Bakery Menu</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #fff5f7;
+}
+
+header {
+    background: linear-gradient(135deg, #ff4f9a, #ff8fc7);
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 40px;
+}
+
+header p {
+    margin: 5px;
+    font-size: 18px;
+}
+
+.section-title {
+    padding: 20px;
+    font-size: 24px;
+    color: #ff2e88;
+    font-weight: bold;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.price {
+    color: #ff2e88;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.desc {
+    font-size: 14px;
+    color: #555;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Lamecie Bakery 🍰</h1>
+    <p>Premium Cheesecakes & Desserts in Equipetrol</p>
+</header>
+
+<!-- CHEESECAKES -->
+<div class="section-title">Cheesecakes</div>
+
+<div class="menu">
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1542826438-bd32f43d626f">
+        <div class="card-content">
+            <h3>Classic Cheesecake</h3>
+            <p class="desc">Smooth vanilla cheesecake with biscuit base.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa">
+        <div class="card-content">
+            <h3>Chocolate Cheesecake</h3>
+            <p class="desc">Rich and creamy chocolate flavor.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1559628233-100c798642d4">
+        <div class="card-content">
+            <h3>Oreo Cheesecake</h3>
+            <p class="desc">Cheesecake with Oreo cookie crunch.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187">
+        <div class="card-content">
+            <h3>Red Berries Cheesecake</h3>
+            <p class="desc">Fresh berries topping with creamy base.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
+        <div class="card-content">
+            <h3>Pistachio Cheesecake</h3>
+            <p class="desc">Smooth pistachio flavor with soft texture.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1505253213348-cd54c92b37c6">
+        <div class="card-content">
+            <h3>Passion Fruit Cheesecake</h3>
+            <p class="desc">Tropical and refreshing flavor.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- OTHER DESSERTS -->
+<div class="section-title">Other Desserts</div>
+
+<div class="menu">
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307">
+        <div class="card-content">
+            <h3>Tiramisu</h3>
+            <p class="desc">Classic Italian dessert with coffee flavor.</p>
+            <p class="price">Bs 30</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d">
+        <div class="card-content">
+            <h3>Custom Cakes</h3>
+            <p class="desc">Personalized cakes for events and birthdays.</p>
+            <p class="price">From Bs 80</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1509365465985-25d11c17e812">
+        <div class="card-content">
+            <h3>Pies</h3>
+            <p class="desc">Fruit and creamy baked pies.</p>
+            <p class="price">Bs 20–35</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
+        <div class="card-content">
+            <h3>Pavlova</h3>
+            <p class="desc">Light meringue with cream and fruits.</p>
+            <p class="price">Bs 25</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- DRINKS -->
+<div class="section-title">Drinks</div>
+
+<div class="menu">
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348">
+        <div class="card-content">
+            <h3>Coffee</h3>
+            <p class="desc">Hot espresso-based drinks.</p>
+            <p class="price">Bs 10–15</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87">
+        <div class="card-content">
+            <h3>Iced Drinks</h3>
+            <p class="desc">Cold refreshing beverages.</p>
+            <p class="price">Bs 12–18</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
