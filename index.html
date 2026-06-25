@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LaMecie Bakery</title>
+<title>Lamecie Bakery</title>
 
 <style>
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #fffafc;
+    padding-bottom: 80px;
 }
 
 header {
@@ -17,10 +18,68 @@ header {
     color: #b85c8a;
     text-align: center;
     padding: 30px;
+    position: relative;
 }
 
 header h1 { margin: 0; font-size: 40px; }
 
+/* Controles Superiores */
+.top-controls {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-header {
+    background: white;
+    border: 2px solid #d47aa8;
+    color: #d47aa8;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.btn-header.login {
+    background: #d47aa8;
+    color: white;
+}
+
+.user-info {
+    font-size: 14px;
+    color: #b85c8a;
+    font-weight: bold;
+}
+
+/* Navegación por Pestañas */
+.tabs {
+    display: flex;
+    justify-content: center;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.tab {
+    padding: 15px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #888;
+    border-bottom: 3px solid transparent;
+}
+
+.tab.active {
+    color: #d47aa8;
+    border-bottom: 3px solid #d47aa8;
+}
+
+.view-section { display: none; }
+.view-section.active { display: block; }
+
+/* Menú de Productos */
 .section-title {
     padding: 20px;
     font-size: 24px;
@@ -40,190 +99,311 @@ header h1 { margin: 0; font-size: 40px; }
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.card img {
+.card img { width: 100%; height: 180px; object-fit: cover; }
+.card-content { padding: 15px; flex-grow: 1; }
+.price { color: #d47aa8; font-weight: bold; font-size: 18px; margin: 10px 0; }
+.desc { font-size: 14px; color: #555; height: 40px; }
+
+.add-btn {
+    background-color: #d47aa8;
+    color: white;
+    border: none;
+    padding: 12px;
     width: 100%;
-    height: 180px;
-    object-fit: cover;
+    border-radius: 0 0 15px 15px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.card-content { padding: 15px; }
+/* Vista Detallada del Carrito */
+.cart-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
 
-.price { color: #d47aa8; font-weight: bold; }
-.desc { font-size: 14px; color: #555; }
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-controls button {
+    background: #ffd1e8;
+    border: none;
+    color: #b85c8a;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.cart-total-section {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #b85c8a;
+    margin-top: 20px;
+}
+
+.checkout-btn {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* Barra Flotante Inferior */
+.cart-bar-fixed {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
 </style>
 </head>
-
 <body>
 
 <header>
+    <div class="top-controls">
+        <button class="btn-header" onclick="toggleLanguage()" id="langBtn">English</button>
+        <div id="auth-section">
+            <button class="btn-header login" onclick="loginWithGoogle()" id="loginBtn">Iniciar sesión con Gmail</button>
+        </div>
+    </div>
     <h1>Lamecie Bakery 🍰</h1>
-    <p>Cheesecakes & Premium Desserts</p>
+    <p id="header-subtitle">Cheesecakes & Postres Premium</p>
 </header>
 
-<!-- CHEESECAKES -->
-<div class="section-title">Cheesecakes</div>
-
-<div class="menu">
-
-    <div class="card">
-        <img src="images/classic-cheesecake.jpg">
-        <div class="card-content">
-            <h3>Classic Cheesecake</h3>
-            <p class="desc">Creamy vanilla cheesecake.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/chocolate-cheesecake.jpg">
-        <div class="card-content">
-            <h3>Chocolate Cheesecake</h3>
-            <p class="desc">Rich chocolate cheesecake.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/oreo-cheesecake.jpg">
-        <div class="card-content">
-            <h3>Oreo Cheesecake</h3>
-            <p class="desc">Cheesecake with Oreo cookies.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/red-berries-cheesecake.jpg">
-        <div class="card-content">
-            <h3>Red Berries Cheesecake</h3>
-            <p class="desc">Fresh strawberry topping.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/pistachio-cheesecake.jpg">
-        <div class="card-content">
-            <h3>Pistachio Cheesecake</h3>
-            <p class="desc">Creamy pistachio flavor.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/passion-fruit-cheesecake.jpg">
-        <div class="card-content">
-            <h3>Passion Fruit Cheesecake</h3>
-            <p class="desc">Tropical passion fruit taste.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
+<div class="tabs">
+    <div class="tab active" id="tab-menu" onclick="switchView('menu-view')">Menú</div>
+    <div class="tab" id="tab-cart" onclick="switchView('cart-view')">Carrito (<span class="cart-count-badge">0</span>)</div>
 </div>
 
-<!-- OTHER DESSERTS -->
-<div class="section-title">Other Desserts</div>
+<div id="menu-view" class="view-section active">
+    <div class="section-title" id="title-cheesecakes">Cheesecakes</div>
+    <div class="menu">
+        <div class="card">
+            <img src="images/classic-cheesecake.jpg">
+            <div class="card-content">
+                <h3 data-es="Cheesecake Clásico" data-en="Classic Cheesecake">Cheesecake Clásico</h3>
+                <p class="desc" data-es="Crema de cheesecake de vainilla." data-en="Creamy vanilla cheesecake.">Crema de cheesecake de vainilla.</p>
+                <p class="price">Bs 25</p>
+            </div>
+            <button class="add-btn" onclick="addToCart('Cheesecake Clásico', 'Classic Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+        </div>
 
-<div class="menu">
-
-    <div class="card">
-        <img src="images/tiramisu.jpg">
-        <div class="card-content">
-            <h3>Tiramisu</h3>
-            <p class="desc">Classic Italian dessert.</p>
-            <p class="price">Bs 30</p>
+        <div class="card">
+            <img src="images/chocolate-cheesecake.jpg">
+            <div class="card-content">
+                <h3 data-es="Cheesecake de Chocolate" data-en="Chocolate Cheesecake">Cheesecake de Chocolate</h3>
+                <p class="desc" data-es="Rico cheesecake de chocolate." data-en="Rich chocolate cheesecake.">Rico cheesecake de chocolate.</p>
+                <p class="price">Bs 25</p>
+            </div>
+            <button class="add-btn" onclick="addToCart('Cheesecake de Chocolate', 'Chocolate Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
         </div>
     </div>
-
-    <div class="card">
-        <img src="images/apple-pie.jpg">
-        <div class="card-content">
-            <h3>Apple Pie</h3>
-            <p class="desc">Fruit baked pie.</p>
-            <p class="price">Bs 20–35</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/pavlova-dessert.jpg">
-        <div class="card-content">
-            <h3>Pavlova</h3>
-            <p class="desc">Meringue with cream & fruits.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
 </div>
 
-<!-- COFFEE -->
-<div class="section-title">Coffee ☕</div>
-
-<div class="menu">
-
-    <div class="card">
-        <img src="images/espresso.jpg">
-        <div class="card-content">
-            <h3>Espresso</h3>
-            <p class="desc">Strong and classic coffee shot.</p>
-            <p class="price">Bs 15</p>
+<div id="cart-view" class="view-section">
+    <div class="cart-container">
+        <h2 id="cart-title-page">Tu Pedido</h2>
+        <div id="cart-items-list">
+            </div>
+        <div class="cart-total-section">
+            Total: Bs <span id="cart-total-value">0</span>
         </div>
+        <button class="checkout-btn" onclick="processOrder()" id="checkoutBtn">Confirmar y Enviar Orden 🚀</button>
     </div>
-
-    <div class="card">
-        <img src="images/latte.jpg">
-        <div class="card-content">
-            <h3>Latte</h3>
-            <p class="desc">Creamy coffee with milk.</p>
-            <p class="price">Bs 20</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/cappuccino.jpg">
-        <div class="card-content">
-            <h3>Cappuccino</h3>
-            <p class="desc">Espresso with foam milk.</p>
-            <p class="price">Bs 20</p>
-        </div>
-    </div>
-
 </div>
 
-<!-- ICED DRINKS -->
-<div class="section-title">Iced Drinks 🧊</div>
-
-<div class="menu">
-
-    <div class="card">
-        <img src="images/iced-latte.jpg">
-        <div class="card-content">
-            <h3>Iced Latte</h3>
-            <p class="desc">Cold coffee with milk and ice.</p>
-            <p class="price">Bs 22</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/iced-americano.jpg">
-        <div class="card-content">
-            <h3>Iced Americano</h3>
-            <p class="desc">Espresso with cold water and ice.</p>
-            <p class="price">Bs 18</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="images/frappuccino.jpg">
-        <div class="card-content">
-            <h3>Frappuccino</h3>
-            <p class="desc">Blended iced coffee drink.</p>
-            <p class="price">Bs 25</p>
-        </div>
-    </div>
-
+<div class="cart-bar-fixed" onclick="switchView('cart-view')">
+    <span style="color: #b85c8a; font-weight: bold;" id="fixed-cart-text">Ver mi pedido:</span>
+    <span style="background: #d47aa8; color: white; padding: 5px 10px; border-radius: 50%; font-weight: bold;" class="cart-count-badge">0</span>
 </div>
 
+<script>
+// --- CONTROL DE IDIOMAS ---
+let currentLang = 'es';
+const translations = {
+    es: {
+        subtitle: "Cheesecakes & Postres Premium",
+        cheesecakes: "Cheesecakes",
+        menuTab: "Menú",
+        cartTab: "Carrito",
+        cartTitle: "Tu Pedido",
+        fixedCartText: "Ver mi pedido:",
+        checkoutBtn: "Confirmar y Enviar Orden 🚀",
+        loginBtn: "Iniciar sesión con Gmail",
+        emptyAlert: "¡Tu carrito está vacío!",
+        loginAlert: "Por favor, inicia sesión con Gmail antes de pedir.",
+        btnLang: "English"
+    },
+    en: {
+        subtitle: "Cheesecakes & Premium Desserts",
+        cheesecakes: "Cheesecakes",
+        menuTab: "Menu",
+        cartTab: "Cart",
+        cartTitle: "Your Order",
+        fixedCartText: "View my order:",
+        checkoutBtn: "Confirm & Send Order 🚀",
+        loginBtn: "Sign in with Gmail",
+        emptyAlert: "Your cart is empty!",
+        loginAlert: "Please sign in with Gmail before ordering.",
+        btnLang: "Español"
+    }
+};
+
+function toggleLanguage() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    document.getElementById('langBtn').innerText = translations[currentLang].btnLang;
+    document.getElementById('header-subtitle').innerText = translations[currentLang].subtitle;
+    document.getElementById('title-cheesecakes').innerText = translations[currentLang].cheesecakes;
+    document.getElementById('tab-menu').childNodes[0].nodeValue = translations[currentLang].menuTab + " ";
+    document.getElementById('tab-cart').childNodes[0].nodeValue = translations[currentLang].cartTab + " ";
+    document.getElementById('cart-title-page').innerText = translations[currentLang].cartTitle;
+    document.getElementById('fixed-cart-text').innerText = translations[currentLang].fixedCartText;
+    document.getElementById('checkoutBtn').innerText = translations[currentLang].checkoutBtn;
+    if(document.getElementById('loginBtn')) document.getElementById('loginBtn').innerText = translations[currentLang].loginBtn;
+
+    document.querySelectorAll('[data-es]').forEach(el => {
+        el.innerText = el.getAttribute(`data-${currentLang}`);
+    });
+    renderCart();
+}
+
+function switchView(viewId) {
+    document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    if(viewId === 'menu-view') document.getElementById('tab-menu').classList.add('active');
+    if(viewId === 'cart-view') document.getElementById('tab-cart').classList.add('active');
+}
+
+// --- LOGICA DEL CARRITO DE COMPRAS ---
+let cart = {};
+
+function addToCart(nameEs, nameEn, price) {
+    const key = nameEs; 
+    if (cart[key]) {
+        cart[key].quantity += 1;
+    } else {
+        cart[key] = { nameEs, nameEn, price, quantity: 1 };
+    }
+    updateCartBadges();
+    renderCart();
+}
+
+function changeQuantity(key, amount) {
+    if (!cart[key]) return;
+    cart[key].quantity += amount;
+    if (cart[key].quantity <= 0) {
+        delete cart[key];
+    }
+    updateCartBadges();
+    renderCart();
+}
+
+function updateCartBadges() {
+    let totalItems = 0;
+    for (let k in cart) { totalItems += cart[k].quantity; }
+    document.querySelectorAll('.cart-count-badge').forEach(el => el.innerText = totalItems);
+}
+
+function renderCart() {
+    const listElement = document.getElementById('cart-items-list');
+    listElement.innerHTML = '';
+    let totalValue = 0;
+
+    for (let k in cart) {
+        const item = cart[k];
+        const displayName = currentLang === 'es' ? item.nameEs : item.nameEn;
+        totalValue += item.price * item.quantity;
+
+        listElement.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    <strong>${displayName}</strong><br>
+                    <span style="color:#888;">Bs ${item.price} c/u</span>
+                </div>
+                <div class="cart-item-controls">
+                    <button onclick="changeQuantity('${k}', -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQuantity('${k}', 1)">+</button>
+                </div>
+            </div>
+        `;
+    }
+    document.getElementById('cart-total-value').innerText = totalValue;
+}
+
+// --- SECCIÓN DE LOGIN (GMAIL / GOOGLE) ---
+let currentUser = null;
+
+function loginWithGoogle() {
+    // Simulación de inicio de sesión rápido para pruebas locales
+    currentUser = {
+        displayName: "Cliente Lamecie",
+        email: "cliente@gmail.com"
+    };
+    
+    // Cambiar la UI para mostrar el usuario logueado
+    document.getElementById('auth-section').innerHTML = `
+        <span class="user-info">👋 ${currentUser.displayName}</span>
+    `;
+}
+
+// --- PROCESAR E INTEGRAR TODO ---
+function processOrder() {
+    let totalValue = document.getElementById('cart-total-value').innerText;
+    
+    if (totalValue == "0") {
+        alert(translations[currentLang].emptyAlert);
+        return;
+    }
+    
+    if (!currentUser) {
+        alert(translations[currentLang].loginAlert);
+        return;
+    }
+
+    // Armar el mensaje final
+    let mensaje = `*Lamecie Bakery - Nueva Orden*\n`;
+    mensaje += `*Cliente:* ${currentUser.displayName} (${currentUser.email})\n\n`;
+    
+    for (let k in cart) {
+        const name = currentLang === 'es' ? cart[k].nameEs : cart[k].nameEn;
+        mensaje += `• ${cart[k].quantity}x ${name} - Bs ${cart[k].price * cart[k].quantity}\n`;
+    }
+    
+    mensaje += `\n*Total a pagar:* Bs ${totalValue}`;
+    
+    // Tu teléfono corporativo (reemplázalo)
+    const telefono = "59100000000"; 
+    window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
+</script>
 </body>
 </html>
