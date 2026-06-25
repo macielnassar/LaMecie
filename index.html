@@ -10,7 +10,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #fffafc;
-    padding-bottom: 80px;
+    padding-bottom: 120px; /* Espacio para el carrito */
 }
 
 header {
@@ -23,63 +23,22 @@ header {
 
 header h1 { margin: 0; font-size: 40px; }
 
-/* Controles Superiores */
-.top-controls {
+/* Selector de Idioma */
+.lang-selector {
     position: absolute;
     top: 15px;
     right: 15px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
 }
-
-.btn-header {
+.lang-btn {
     background: white;
     border: 2px solid #d47aa8;
     color: #d47aa8;
-    padding: 6px 12px;
+    padding: 5px 12px;
     border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 13px;
 }
 
-.btn-header.login {
-    background: #d47aa8;
-    color: white;
-}
-
-.user-info {
-    font-size: 14px;
-    color: #b85c8a;
-    font-weight: bold;
-}
-
-/* Navegación por Pestañas */
-.tabs {
-    display: flex;
-    justify-content: center;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.tab {
-    padding: 15px 25px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #888;
-    border-bottom: 3px solid transparent;
-}
-
-.tab.active {
-    color: #d47aa8;
-    border-bottom: 3px solid #d47aa8;
-}
-
-.view-section { display: none; }
-.view-section.active { display: block; }
-
-/* Menú de Productos */
 .section-title {
     padding: 20px;
     font-size: 24px;
@@ -104,306 +63,377 @@ header h1 { margin: 0; font-size: 40px; }
     justify-content: space-between;
 }
 
-.card img { width: 100%; height: 180px; object-fit: cover; }
-.card-content { padding: 15px; flex-grow: 1; }
-.price { color: #d47aa8; font-weight: bold; font-size: 18px; margin: 10px 0; }
-.desc { font-size: 14px; color: #555; height: 40px; }
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
 
+.card-content { padding: 15px; flex-grow: 1; }
+.price { color: #d47aa8; font-weight: bold; font-size: 16px; margin: 8px 0; }
+.desc { font-size: 14px; color: #555; min-height: 35px; }
+
+/* Botón Añadir */
 .add-btn {
     background-color: #d47aa8;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 10px;
     width: 100%;
     border-radius: 0 0 15px 15px;
     font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s;
 }
+.add-btn:hover { background-color: #b85c8a; }
 
-/* Vista Detallada del Carrito */
-.cart-container {
-    max-width: 600px;
-    margin: 30px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.cart-item-controls button {
-    background: #ffd1e8;
-    border: none;
-    color: #b85c8a;
-    padding: 5px 10px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 0 5px;
-}
-
-.cart-total-section {
-    text-align: right;
-    font-size: 20px;
-    font-weight: bold;
-    color: #b85c8a;
-    margin-top: 20px;
-}
-
-.checkout-btn {
-    background-color: #25D366;
-    color: white;
-    border: none;
-    padding: 15px;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-/* Barra Flotante Inferior */
-.cart-bar-fixed {
+/* Panel del Carrito e Interfaz de Pedido */
+.cart-footer {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     background: white;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
     padding: 15px 20px;
+    z-index: 100;
+}
+
+.cart-summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-    cursor: pointer;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #b85c8a;
 }
+
+.order-options {
+    display: flex;
+    gap: 10px;
+}
+
+.order-btn {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+}
+
+.btn-gmail { background-color: #db4437; } /* Rojo Google */
+.btn-gmail:hover { background-color: #c23325; }
+
+.btn-whatsapp { background-color: #25D366; } /* Verde WhatsApp */
+.btn-whatsapp:hover { background-color: #1ebd59; }
 </style>
 </head>
+
 <body>
 
 <header>
-    <div class="top-controls">
-        <button class="btn-header" onclick="toggleLanguage()" id="langBtn">English</button>
-        <div id="auth-section">
-            <button class="btn-header login" onclick="loginWithGoogle()" id="loginBtn">Iniciar sesión con Gmail</button>
-        </div>
+    <div class="lang-selector">
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
     </div>
     <h1>Lamecie Bakery 🍰</h1>
     <p id="header-subtitle">Cheesecakes & Postres Premium</p>
 </header>
 
-<div class="tabs">
-    <div class="tab active" id="tab-menu" onclick="switchView('menu-view')">Menú</div>
-    <div class="tab" id="tab-cart" onclick="switchView('cart-view')">Carrito (<span class="cart-count-badge">0</span>)</div>
+<div class="section-title" id="title-cheesecakes">Cheesecakes</div>
+<div class="menu">
+
+    <div class="card">
+        <img src="images/classic-cheesecake.jpg">
+        <div class="card-content">
+            <h3 data-es="Cheesecake Clásico" data-en="Classic Cheesecake">Cheesecake Clásico</h3>
+            <p class="desc" data-es="Crema de cheesecake de vainilla." data-en="Creamy vanilla cheesecake.">Crema de cheesecake de vainilla.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Cheesecake Clásico', 'Classic Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/chocolate-cheesecake.jpg">
+        <div class="card-content">
+            <h3 data-es="Cheesecake de Chocolate" data-en="Chocolate Cheesecake">Cheesecake de Chocolate</h3>
+            <p class="desc" data-es="Rico cheesecake de chocolate." data-en="Rich chocolate cheesecake.">Rico cheesecake de chocolate.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Cheesecake de Chocolate', 'Chocolate Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/oreo-cheesecake.jpg">
+        <div class="card-content">
+            <h3 data-es="Cheesecake de Oreo" data-en="Oreo Cheesecake">Cheesecake de Oreo</h3>
+            <p class="desc" data-es="Cheesecake con galletas Oreo." data-en="Cheesecake with Oreo cookies.">Cheesecake con galletas Oreo.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Cheesecake de Oreo', 'Oreo Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/red-berries-cheesecake.jpg">
+        <div class="card-content">
+            <h3 data-es="Cheesecake de Frutos Rojos" data-en="Red Berries Cheesecake">Cheesecake de Frutos Rojos</h3>
+            <p class="desc" data-es="Topping de fresas frescas." data-en="Fresh strawberry topping.">Topping de fresas frescas.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Cheesecake de Frutos Rojos', 'Red Berries Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/pistachio-cheesecake.jpg">
+        <div class="card-content">
+            <h3 data-es="Cheesecake de Pistacho" data-en="Pistachio Cheesecake">Cheesecake de Pistacho</h3>
+            <p class="desc" data-es="Sabor cremoso a pistacho." data-en="Creamy pistachio flavor.">Sabor cremoso a pistacho.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Cheesecake de Pistacho', 'Pistachio Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/passion-fruit-cheesecake.jpg">
+        <div class="card-content">
+            <h3 data-es="Cheesecake de Maracuyá" data-en="Passion Fruit Cheesecake">Cheesecake de Maracuyá</h3>
+            <p class="desc" data-es="Sabor tropical a maracuyá." data-en="Tropical passion fruit taste.">Sabor tropical a maracuyá.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Cheesecake de Maracuyá', 'Passion Fruit Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
 </div>
 
-<div id="menu-view" class="view-section active">
-    <div class="section-title" id="title-cheesecakes">Cheesecakes</div>
-    <div class="menu">
-        <div class="card">
-            <img src="images/classic-cheesecake.jpg">
-            <div class="card-content">
-                <h3 data-es="Cheesecake Clásico" data-en="Classic Cheesecake">Cheesecake Clásico</h3>
-                <p class="desc" data-es="Crema de cheesecake de vainilla." data-en="Creamy vanilla cheesecake.">Crema de cheesecake de vainilla.</p>
-                <p class="price">Bs 25</p>
-            </div>
-            <button class="add-btn" onclick="addToCart('Cheesecake Clásico', 'Classic Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
-        </div>
+<div class="section-title" id="title-desserts">Otros Postres</div>
+<div class="menu">
 
-        <div class="card">
-            <img src="images/chocolate-cheesecake.jpg">
-            <div class="card-content">
-                <h3 data-es="Cheesecake de Chocolate" data-en="Chocolate Cheesecake">Cheesecake de Chocolate</h3>
-                <p class="desc" data-es="Rico cheesecake de chocolate." data-en="Rich chocolate cheesecake.">Rico cheesecake de chocolate.</p>
-                <p class="price">Bs 25</p>
-            </div>
-            <button class="add-btn" onclick="addToCart('Cheesecake de Chocolate', 'Chocolate Cheesecake', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    <div class="card">
+        <img src="images/tiramisu.jpg">
+        <div class="card-content">
+            <h3 data-es="Tiramisú" data-en="Tiramisu">Tiramisú</h3>
+            <p class="desc" data-es="Postre clásico italiano." data-en="Classic Italian dessert.">Postre clásico italiano.</p>
+            <p class="price">Bs <span class="item-price">30</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Tiramisú', 'Tiramisu', 30)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/apple-pie.jpg">
+        <div class="card-content">
+            <h3 data-es="Pie de Manzana" data-en="Apple Pie">Pie de Manzana</h3>
+            <p class="desc" data-es="Tarta horneada de fruta." data-en="Fruit baked pie.">Tarta horneada de fruta.</p>
+            <p class="price">Bs <span class="item-price">35</span></p> 
+        </div>
+        <button class="add-btn" onclick="addToCart('Pie de Manzana', 'Apple Pie', 35)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/pavlova-dessert.jpg">
+        <div class="card-content">
+            <h3 data-es="Pavlova" data-en="Pavlova">Pavlova</h3>
+            <p class="desc" data-es="Merengue con crema y frutas." data-en="Meringue with cream & fruits.">Merengue con crema y frutas.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Pavlova', 'Pavlova', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+</div>
+
+<div class="section-title" id="title-coffee">Café ☕</div>
+<div class="menu">
+
+    <div class="card">
+        <img src="images/espresso.jpg">
+        <div class="card-content">
+            <h3 data-es="Espresso" data-en="Espresso">Espresso</h3>
+            <p class="desc" data-es="Inyección de café fuerte y clásico." data-en="Strong and classic coffee shot.">Inyección de café fuerte y clásico.</p>
+            <p class="price">Bs <span class="item-price">15</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Espresso', 'Espresso', 15)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/latte.jpg">
+        <div class="card-content">
+            <h3 data-es="Latte" data-en="Latte">Latte</h3>
+            <p class="desc" data-es="Café cremoso con leche." data-en="Creamy coffee with milk.">Café cremoso con leche.</p>
+            <p class="price">Bs <span class="item-price">20</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Latte', 'Latte', 20)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/cappuccino.jpg">
+        <div class="card-content">
+            <h3 data-es="Capuchino" data-en="Cappuccino">Capuchino</h3>
+            <p class="desc" data-es="Espresso con espuma de leche." data-en="Espresso with foam milk.">Espresso con espuma de leche.</p>
+            <p class="price">Bs <span class="item-price">20</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Capuchino', 'Cappuccino', 20)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+</div>
+
+<div class="section-title" id="title-iced">Bebidas Frías 🧊</div>
+<div class="menu">
+
+    <div class="card">
+        <img src="images/iced-latte.jpg">
+        <div class="card-content">
+            <h3 data-es="Latte Frío" data-en="Iced Latte">Latte Frío</h3>
+            <p class="desc" data-es="Café frío con leche y hielo." data-en="Cold coffee with milk and ice.">Café frío con leche y hielo.</p>
+            <p class="price">Bs <span class="item-price">22</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Latte Frío', 'Iced Latte', 22)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/iced-americano.jpg">
+        <div class="card-content">
+            <h3 data-es="Americano Frío" data-en="Iced Americano">Americano Frío</h3>
+            <p class="desc" data-es="Espresso con agua fría e hielo." data-en="Espresso with cold water and ice.">Espresso con agua fría e hielo.</p>
+            <p class="price">Bs <span class="item-price">18</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Americano Frío', 'Iced Americano', 18)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+    <div class="card">
+        <img src="images/frappuccino.jpg">
+        <div class="card-content">
+            <h3 data-es="Frappuccino" data-en="Frappuccino">Frappuccino</h3>
+            <p class="desc" data-es="Bebida de café helado mezclado." data-en="Blended iced coffee drink.">Bebida de café helado mezclado.</p>
+            <p class="price">Bs <span class="item-price">25</span></p>
+        </div>
+        <button class="add-btn" onclick="addToCart('Frappuccino', 'Frappuccino', 25)" data-es="Agregar" data-en="Add">Agregar</button>
+    </div>
+
+</div>
+
+<div class="cart-footer">
+    <div class="cart-summary">
+        <div>
+            <span id="cart-text">Items:</span> <span id="cart-count">0</span>
+        </div>
+        <div>
+            Total: Bs <span id="cart-total">0</span>
         </div>
     </div>
-</div>
-
-<div id="cart-view" class="view-section">
-    <div class="cart-container">
-        <h2 id="cart-title-page">Tu Pedido</h2>
-        <div id="cart-items-list">
-            </div>
-        <div class="cart-total-section">
-            Total: Bs <span id="cart-total-value">0</span>
-        </div>
-        <button class="checkout-btn" onclick="processOrder()" id="checkoutBtn">Confirmar y Enviar Orden 🚀</button>
+    <div class="order-options">
+        <button class="order-btn btn-gmail" onclick="orderWithGmail()" id="btnGmail">Ordenar con Gmail ✉️</button>
+        <button class="order-btn btn-whatsapp" onclick="orderWithWhatsApp()" id="btnWhatsapp">Pedir por WhatsApp 💬</button>
     </div>
-</div>
-
-<div class="cart-bar-fixed" onclick="switchView('cart-view')">
-    <span style="color: #b85c8a; font-weight: bold;" id="fixed-cart-text">Ver mi pedido:</span>
-    <span style="background: #d47aa8; color: white; padding: 5px 10px; border-radius: 50%; font-weight: bold;" class="cart-count-badge">0</span>
 </div>
 
 <script>
 // --- CONTROL DE IDIOMAS ---
 let currentLang = 'es';
+
 const translations = {
     es: {
         subtitle: "Cheesecakes & Postres Premium",
         cheesecakes: "Cheesecakes",
-        menuTab: "Menú",
-        cartTab: "Carrito",
-        cartTitle: "Tu Pedido",
-        fixedCartText: "Ver mi pedido:",
-        checkoutBtn: "Confirmar y Enviar Orden 🚀",
-        loginBtn: "Iniciar sesión con Gmail",
-        emptyAlert: "¡Tu carrito está vacío!",
-        loginAlert: "Por favor, inicia sesión con Gmail antes de pedir.",
-        btnLang: "English"
+        desserts: "Otros Postres",
+        coffee: "Café ☕",
+        iced: "Bebidas Frías 🧊",
+        cartText: "Items:",
+        btnGmail: "Ordenar con Gmail ✉️",
+        btnWhatsapp: "Pedir por WhatsApp 💬",
+        btnLang: "English",
+        emptyAlert: "¡Tu carrito está vacío! Añade productos primero."
     },
     en: {
         subtitle: "Cheesecakes & Premium Desserts",
         cheesecakes: "Cheesecakes",
-        menuTab: "Menu",
-        cartTab: "Cart",
-        cartTitle: "Your Order",
-        fixedCartText: "View my order:",
-        checkoutBtn: "Confirm & Send Order 🚀",
-        loginBtn: "Sign in with Gmail",
-        emptyAlert: "Your cart is empty!",
-        loginAlert: "Please sign in with Gmail before ordering.",
-        btnLang: "Español"
+        desserts: "Other Desserts",
+        coffee: "Coffee ☕",
+        iced: "Iced Drinks 🧊",
+        cartText: "Items:",
+        btnGmail: "Order with Gmail ✉️",
+        btnWhatsapp: "Order via WhatsApp 💬",
+        btnLang: "Español",
+        emptyAlert: "Your cart is empty! Add some products first."
     }
 };
 
 function toggleLanguage() {
     currentLang = currentLang === 'es' ? 'en' : 'es';
+    
     document.getElementById('langBtn').innerText = translations[currentLang].btnLang;
     document.getElementById('header-subtitle').innerText = translations[currentLang].subtitle;
     document.getElementById('title-cheesecakes').innerText = translations[currentLang].cheesecakes;
-    document.getElementById('tab-menu').childNodes[0].nodeValue = translations[currentLang].menuTab + " ";
-    document.getElementById('tab-cart').childNodes[0].nodeValue = translations[currentLang].cartTab + " ";
-    document.getElementById('cart-title-page').innerText = translations[currentLang].cartTitle;
-    document.getElementById('fixed-cart-text').innerText = translations[currentLang].fixedCartText;
-    document.getElementById('checkoutBtn').innerText = translations[currentLang].checkoutBtn;
-    if(document.getElementById('loginBtn')) document.getElementById('loginBtn').innerText = translations[currentLang].loginBtn;
+    document.getElementById('title-desserts').innerText = translations[currentLang].desserts;
+    document.getElementById('title-coffee').innerText = translations[currentLang].coffee;
+    document.getElementById('title-iced').innerText = translations[currentLang].iced;
+    document.getElementById('cart-text').innerText = translations[currentLang].cartText;
+    document.getElementById('btnGmail').innerText = translations[currentLang].btnGmail;
+    document.getElementById('btnWhatsapp').innerText = translations[currentLang].btnWhatsapp;
 
-    document.querySelectorAll('[data-es]').forEach(el => {
-        el.innerText = el.getAttribute(`data-${currentLang}`);
+    document.querySelectorAll('[data-es]').forEach(element => {
+        element.innerText = element.getAttribute(`data-${currentLang}`);
     });
-    renderCart();
 }
 
-function switchView(viewId) {
-    document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(viewId).classList.add('active');
-    if(viewId === 'menu-view') document.getElementById('tab-menu').classList.add('active');
-    if(viewId === 'cart-view') document.getElementById('tab-cart').classList.add('active');
-}
-
-// --- LOGICA DEL CARRITO DE COMPRAS ---
-let cart = {};
+// --- LÓGICA DEL CARRITO ---
+let cart = [];
+let total = 0;
 
 function addToCart(nameEs, nameEn, price) {
-    const key = nameEs; 
-    if (cart[key]) {
-        cart[key].quantity += 1;
-    } else {
-        cart[key] = { nameEs, nameEn, price, quantity: 1 };
-    }
-    updateCartBadges();
-    renderCart();
-}
-
-function changeQuantity(key, amount) {
-    if (!cart[key]) return;
-    cart[key].quantity += amount;
-    if (cart[key].quantity <= 0) {
-        delete cart[key];
-    }
-    updateCartBadges();
-    renderCart();
-}
-
-function updateCartBadges() {
-    let totalItems = 0;
-    for (let k in cart) { totalItems += cart[k].quantity; }
-    document.querySelectorAll('.cart-count-badge').forEach(el => el.innerText = totalItems);
-}
-
-function renderCart() {
-    const listElement = document.getElementById('cart-items-list');
-    listElement.innerHTML = '';
-    let totalValue = 0;
-
-    for (let k in cart) {
-        const item = cart[k];
-        const displayName = currentLang === 'es' ? item.nameEs : item.nameEn;
-        totalValue += item.price * item.quantity;
-
-        listElement.innerHTML += `
-            <div class="cart-item">
-                <div>
-                    <strong>${displayName}</strong><br>
-                    <span style="color:#888;">Bs ${item.price} c/u</span>
-                </div>
-                <div class="cart-item-controls">
-                    <button onclick="changeQuantity('${k}', -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="changeQuantity('${k}', 1)">+</button>
-                </div>
-            </div>
-        `;
-    }
-    document.getElementById('cart-total-value').innerText = totalValue;
-}
-
-// --- SECCIÓN DE LOGIN (GMAIL / GOOGLE) ---
-let currentUser = null;
-
-function loginWithGoogle() {
-    // Simulación de inicio de sesión rápido para pruebas locales
-    currentUser = {
-        displayName: "Cliente Lamecie",
-        email: "cliente@gmail.com"
-    };
+    cart.push({ nameEs, nameEn, price });
+    total += price;
     
-    // Cambiar la UI para mostrar el usuario logueado
-    document.getElementById('auth-section').innerHTML = `
-        <span class="user-info">👋 ${currentUser.displayName}</span>
-    `;
+    document.getElementById('cart-count').innerText = cart.length;
+    document.getElementById('cart-total').innerText = total;
 }
 
-// --- PROCESAR E INTEGRAR TODO ---
-function processOrder() {
-    let totalValue = document.getElementById('cart-total-value').innerText;
-    
-    if (totalValue == "0") {
+// Genera la lista de texto del pedido según el idioma activo
+function buildOrderText() {
+    let text = "";
+    cart.forEach(item => {
+        const name = currentLang === 'es' ? item.nameEs : item.nameEn;
+        text += `- ${name}: Bs ${item.price}\n`;
+    });
+    return text;
+}
+
+// --- OPCIÓN 1: ORDENAR POR WHATSAPP (A TU NÚMERO) ---
+function orderWithWhatsApp() {
+    if (cart.length === 0) {
         alert(translations[currentLang].emptyAlert);
         return;
     }
+
+    const miTelefono = "59162399399"; // Tu número 62399399 con código de Bolivia (591)
     
-    if (!currentUser) {
-        alert(translations[currentLang].loginAlert);
+    let mensaje = currentLang === 'es' ? "¡Hola Lamecie Bakery! Aquí está mi pedido:\n\n" : "Hello Lamecie Bakery! Here is my order:\n\n";
+    mensaje += buildOrderText();
+    mensaje += `\nTotal: Bs ${total}\n`;
+
+    const whatsappUrl = `https://wa.me/${miTelefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+// --- OPCIÓN 2: ORDENAR CON GMAIL (SIMULACIÓN DE INICIO DE SESIÓN / ENVÍO) ---
+function orderWithGmail() {
+    if (cart.length === 0) {
+        alert(translations[currentLang].emptyAlert);
         return;
     }
 
-    // Armar el mensaje final
-    let mensaje = `*Lamecie Bakery - Nueva Orden*\n`;
-    mensaje += `*Cliente:* ${currentUser.displayName} (${currentUser.email})\n\n`;
+    // Aquí se abre el gestor de correos del cliente simulando el login/envío rápido
+    const miCorreo = "tu-correo-pasteleria@gmail.com"; // Puedes cambiar esto por el correo de tu negocio
+    const asunto = encodeURIComponent(currentLang === 'es' ? "Nuevo Pedido - Lamecie Bakery" : "New Order - Lamecie Bakery");
     
-    for (let k in cart) {
-        const name = currentLang === 'es' ? cart[k].nameEs : cart[k].nameEn;
-        mensaje += `• ${cart[k].quantity}x ${name} - Bs ${cart[k].price * cart[k].quantity}\n`;
-    }
+    let cuerpo = currentLang === 'es' ? "Detalles de la orden desde la cuenta de Gmail:\n\n" : "Order details from Gmail account:\n\n";
+    cuerpo += buildOrderText();
+    cuerpo += `\nTotal: Bs ${total}`;
     
-    mensaje += `\n*Total a pagar:* Bs ${totalValue}`;
-    
-    // Tu teléfono corporativo (reemplázalo)
-    const telefono = "59100000000"; 
-    window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    const mailtoUrl = `mailto:${miCorreo}?subject=${asunto}&body=${encodeURIComponent(cuerpo)}`;
+    window.open(mailtoUrl, '_blank');
 }
 </script>
+
 </body>
 </html>
